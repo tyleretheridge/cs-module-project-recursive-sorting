@@ -4,15 +4,43 @@ def merge(arrA, arrB):
     merged_arr = [0] * elements
 
     # Your code here
+    # Pointers to index of elements in arrays being merged
+    a = 0
+    b = 0
 
+    # Will iterate for length of list to be merged
+    for i in range(elements):
+        # First two conditions allows for efficiency when one list has been merged completely
+        # If A has been completely merged, merge rest of B
+        if a >= len(arrA):
+            merged_arr[i] = arrB[b]
+            b += 1
+        # If B has been completely merged, merge rest of A
+        elif b >= len(arrB):
+            merged_arr[i] = arrA[a]
+            a += 1
+        # If A[a] < B[b], merge A[a]
+        elif arrA[a] < arrB[b]:
+            merged_arr[i] = arrA[a]
+            a += 1
+        # If B[b] < A[a], merge B[b]
+        else:
+            merged_arr[i] = arrB[b]
+            b += 1
 
     return merged_arr
 
 # TO-DO: implement the Merge Sort function below recursively
 def merge_sort(arr):
-    # Your code here
-
-
+    # Lists must be split until len(arr) == 1
+    if len(arr) > 1:
+        # Slice array from beginning to midpoint
+        left = merge_sort(arr[0: len(arr) // 2])
+        # Slice array from midpoint to end
+        right = merge_sort(arr[len(arr) // 2:])
+        # Use helper function to merge with the splits as input
+        arr = merge(left, right)
+    
     return arr
 
 # STRETCH: implement the recursive logic for merge sort in a way that doesn't 
